@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace FlowerShop.Data
+﻿namespace FlowerShop.Data
 {
-    public class FlowerShopDbContext : IdentityDbContext
+    using FlowerShop.Data.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    public class FlowerShopDbContext : IdentityDbContext<User>
     {
         public FlowerShopDbContext(DbContextOptions<FlowerShopDbContext> options)
             : base(options)

@@ -1,5 +1,6 @@
 using FlowerShop.Data;
 using FlowerShop.Data.Models;
+using FlowerShop.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ builder.Services.AddDefaultIdentity<User>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+app.PrepareDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

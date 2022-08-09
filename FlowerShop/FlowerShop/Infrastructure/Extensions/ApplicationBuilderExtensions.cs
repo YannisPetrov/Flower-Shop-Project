@@ -22,7 +22,6 @@
 
             MigrateDatabase(services);
 
-            SeedCategories(services);
             SeedAdministrator(services);
 
             return app;
@@ -33,13 +32,6 @@
             var data = services.GetRequiredService<FlowerShopDbContext>();
 
             data.Database.Migrate();
-        }
-
-        private static void SeedCategories(IServiceProvider services)
-        {
-            var data = services.GetRequiredService<FlowerShopDbContext>();
-
-            data.SaveChanges();
         }
 
         private static void SeedAdministrator(IServiceProvider services)
@@ -59,8 +51,8 @@
 
                     await roleManager.CreateAsync(role);
 
-                    const string adminEmail = "flowerAdmin@fsh.com";
-                    const string adminPassword = "flowerAdmin40";
+                    const string adminEmail = "kalam@abv.bg";
+                    const string adminPassword = "kalam40";
 
                     var user = new User
                     {

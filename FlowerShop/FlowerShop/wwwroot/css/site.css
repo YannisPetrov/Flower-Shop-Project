@@ -13,6 +13,30 @@ html {
   min-height: 100%;
 }
 
+
 body {
   margin-bottom: 60px;
+}
+
+a {
+    color: lightpink;
+}
+    a:hover {
+        color: #ff54cc;
+    }
+
+.navbar-custom,
+.footer-custom{
+    background-color: lightpink;
+}
+.custom-pink-bg {
+    background-color: lightpink;
+}
+
+.btn-custom{
+    background-color: pink;
+}
+
+.btn-login{
+    margin-left: 50px;
 }

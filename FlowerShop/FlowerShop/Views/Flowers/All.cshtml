@@ -1,0 +1,37 @@
+﻿@model AllFlowersQueryModel
+
+    @{
+    ViewBag.Title = "All Flowers";
+}
+
+
+    <form method="get">
+        <div class="row mb-5">
+            <div class="form-group col-md-3 mb-3">
+                <label asp-for="SearchTerm"></label>
+                <input asp-for="SearchTerm" class="form-control" placeholder="Dahlia, Hyacinth, etc...">
+            </div> 
+            </div>
+    </form>
+
+
+<div class="row">
+@foreach(var flower in Model.Flowers){
+    <div class="col-md-4">
+
+        <div class="card" style="width: 18rem;">
+  <img class="card-img-top mb-3" src="@flower.ImageURL">
+  <div class="card-body text-center .custom-pink-bg">
+    <h5 class="card-title">@flower.FlowerName</h5>
+    <p class="card-text">@flower.FlowerPrice $</p>
+    <form method="post">
+        @*<input asp-for="ImageURL" class="form-control" placeholder="Your URL here...">*@
+        <a asp-controller="Flowers" asp-action="AddToCart" class="btn btn-custom">AddToCart</a>
+    </form>
+    
+  </div>
+</div>
+
+    </div>
+}
+</div>

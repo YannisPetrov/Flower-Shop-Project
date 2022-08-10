@@ -36,3 +36,11 @@ a {
 .btn-custom{
     background-color: pink;
 }
+
+.margin-left{
+    margin-left: 600px;
+}
+
+.card-margin{
+    margin-left: 75px;
+}

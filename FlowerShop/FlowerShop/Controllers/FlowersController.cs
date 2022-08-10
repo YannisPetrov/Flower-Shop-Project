@@ -18,19 +18,22 @@
 
         public IActionResult Add() => View();  
 
-        public IActionResult All(string searchTerm)
+        public IActionResult All([FromQuery] AllFlowersQueryModel query)
         {
 
             var flowersQuery = this.data.Flowers.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 flowersQuery = flowersQuery.Where(f =>
-                f.FlowerName.ToLower().Contains(searchTerm.ToLower()));
+                f.FlowerName.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            var totalFlowers = flowersQuery.Count();
+
             var flowers = flowersQuery
-                .OrderByDescending(f => f.Id)
+                .Skip((query.CurrentPage - 1) * AllFlowersQueryModel.FlowersPerPage)
+                .Take(AllFlowersQueryModel.FlowersPerPage)
                 .Select(f => new FlowerListingViewModel
                 {
                     Id = f.Id,
@@ -40,11 +43,10 @@
                 })
                 .ToList();
 
-            return View(new AllFlowersQueryModel
-            {
-                Flowers = flowers,
-                SearchTerm = searchTerm
-            });
+            query.TotalFlowers = totalFlowers;
+            query.Flowers = flowers;
+
+            return View(query);
         }
 
         [HttpPost]

@@ -1,6 +1,7 @@
 using FlowerShop.Data;
 using FlowerShop.Data.Models;
 using FlowerShop.Infrastructure.Extensions;
+using FlowerShop.Services.Flowers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,8 @@ builder.Services.AddDefaultIdentity<User>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FlowerShopDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IFlowerService, FlowerService>();
 
 var app = builder.Build();
 

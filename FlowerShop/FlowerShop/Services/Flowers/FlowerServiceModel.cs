@@ -1,6 +1,6 @@
-﻿namespace FlowerShop.Models.Flowers
+﻿namespace FlowerShop.Services.Flowers
 {
-    public class FlowerListingViewModel
+    public class FlowerServiceModel
     {
         public int Id { get; init; }
         public string FlowerName { get; init; }

@@ -3,48 +3,36 @@
     using System;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
+    using FlowerShop.Models.Api.Flowers;
     using FlowerShop.Models.Flowers;
+    using FlowerShop.Services.Flowers;
     using Microsoft.AspNetCore.Mvc;
 
     public class FlowersController : Controller
     {
-
+        private readonly IFlowerService flowers;
         private readonly FlowerShopDbContext data;
 
-        public FlowersController(FlowerShopDbContext data)
+        public FlowersController(IFlowerService flowers, FlowerShopDbContext data)
         {
+            this.flowers = flowers;
             this.data = data;
         }
 
-        public IActionResult Add() => View();  
+        public IActionResult Add() => View();
 
-        public IActionResult All([FromQuery] AllFlowersQueryModel query)
+        [HttpGet]
+        public IActionResult All([FromQuery]AllFlowersQueryModel query)
         {
 
-            var flowersQuery = this.data.Flowers.AsQueryable();
+            var queryResult = this.flowers.All(
+                query.SearchTerm,
+                query.CurrentPage,
+                AllFlowersQueryModel.FlowersPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                flowersQuery = flowersQuery.Where(f =>
-                f.FlowerName.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
+            query.TotalFlowers = queryResult.TotalFlowers;
+            query.Flowers = queryResult.Flowers;
 
-            var totalFlowers = flowersQuery.Count();
-
-            var flowers = flowersQuery
-                .Skip((query.CurrentPage - 1) * AllFlowersQueryModel.FlowersPerPage)
-                .Take(AllFlowersQueryModel.FlowersPerPage)
-                .Select(f => new FlowerListingViewModel
-                {
-                    Id = f.Id,
-                    FlowerName = f.FlowerName,
-                    FlowerPrice = f.FlowerPrice,
-                    ImageURL = f.ImageURL
-                })
-                .ToList();
-
-            query.TotalFlowers = totalFlowers;
-            query.Flowers = flowers;
 
             return View(query);
         }

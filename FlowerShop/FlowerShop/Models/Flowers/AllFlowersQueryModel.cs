@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
+    using FlowerShop.Services.Flowers;
+
     public class AllFlowersQueryModel
     {
         public const int FlowersPerPage = 3;
@@ -15,6 +17,6 @@
 
         public int TotalFlowers { get; set; }
         public FlowerSorting Sorting { get; init; }
-        public IEnumerable<FlowerListingViewModel> Flowers { get; set; }
+        public IEnumerable<FlowerServiceModel> Flowers { get; set; }
     }
 }

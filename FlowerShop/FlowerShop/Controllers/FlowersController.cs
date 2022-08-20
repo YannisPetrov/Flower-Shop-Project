@@ -3,7 +3,7 @@
     using System;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
-    using FlowerShop.Models.Api.Flowers;
+    using FlowerShop.Infrastructure.Extensions;
     using FlowerShop.Models.Flowers;
     using FlowerShop.Services.Flowers;
     using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,12 @@
         {
             this.flowers = flowers;
             this.data = data;
+        }
+
+        public IActionResult Cart()
+        {
+            /*var myFlowers = this.flowers.ByUser(this.User.Id());*/
+            return View();
         }
 
         public IActionResult Add() => View();
@@ -38,25 +44,50 @@
         }
 
         [HttpPost]
-        public IActionResult Add(AddFlowerFormModel flower)
+        public IActionResult Add(FlowerFormModel flower)
         {
             if (!ModelState.IsValid)
             {
                 return View(flower);
             }
 
-            var flowerData = new Flower
+            this.flowers.Create(flower.FlowerName,
+                                flower.FlowerPrice,
+                                flower.ImageURL);
+
+            return RedirectToAction(nameof(All));
+        } 
+
+        public IActionResult Edit(int id)
+        {
+            var flower = this.flowers.Details(id);
+
+            return View(new FlowerFormModel
             {
                 FlowerName = flower.FlowerName,
                 FlowerPrice = flower.FlowerPrice,
                 ImageURL = flower.ImageURL
-            };
+            });
+        }
 
-            this.data.Flowers.Add(flowerData);
 
-            this.data.SaveChanges();
+        [HttpPost]
+        public IActionResult Edit(int id, FlowerFormModel flower)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(flower);
+            }
+
+            this.flowers.Edit(id,
+                              flower.FlowerName,
+                              flower.FlowerPrice,
+                              flower.ImageURL);
+
+            
 
             return RedirectToAction(nameof(All));
-        } 
+
+        }
     }
 }

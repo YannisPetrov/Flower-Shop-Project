@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FlowerServiceModel>
+@using FlowerShop.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+    <div class="row">
+@foreach(var flower in Model){
+    <div class="col-md-4">
+
+        <div class="card card-margin" style="width: 18rem;">
+  <img class="card-img-top mb-3" src="@flower.ImageURL">
+  <div class="card-body text-center .custom-pink-bg">
+    <h5 class="card-title">@flower.FlowerName</h5>
+
+    <p class="card-text">@flower.FlowerPrice $</p>
+    @if (SignInManager.IsSignedIn(User))
+{
+        var userId = User.Id();
+        var userIsAdmin = User.IsAdmin();
+
+        @if (!userIsAdmin)
+        {
+            <form method="post">
+             <a asp-controller="Flowers" asp-action="AddToCart" class="btn btn-custom">AddToCart</a>
+           </form>
+        }
+        else if (userIsAdmin)
+        {
+            <a asp-controller="Flowers" asp-action="Edit" asp-route-id="@flower.Id" class="btn btn-custom">Edit</a>
+            <a asp-controller="Flowers" asp-action="Delete" asp-route-id="@flower.Id" class="btn btn-custom">Delete</a>
+        }
+}  
+  </div>
+</div>
+
+    </div>
+}
+</div>

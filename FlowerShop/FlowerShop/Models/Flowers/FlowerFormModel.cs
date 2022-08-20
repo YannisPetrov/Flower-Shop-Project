@@ -1,7 +1,7 @@
 ﻿namespace FlowerShop.Models.Flowers
 {
     using System.ComponentModel.DataAnnotations;
-    public class AddFlowerFormModel
+    public class FlowerFormModel
     {
         [Required]
         [Display(Name = "Flower Name")]

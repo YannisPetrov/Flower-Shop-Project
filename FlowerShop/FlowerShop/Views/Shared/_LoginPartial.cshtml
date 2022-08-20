@@ -7,13 +7,13 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    var userId = User.Id();
+        var userId = User.Id();
         var userIsAdmin = User.IsAdmin();
 
         @if (!userIsAdmin)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="MyCart">Cart</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Flowers" asp-action="Cart">Cart</a>
             </li>
         }
         else if (userIsAdmin)

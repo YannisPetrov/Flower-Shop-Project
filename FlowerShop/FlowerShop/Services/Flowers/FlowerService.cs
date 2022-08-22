@@ -91,6 +91,22 @@
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            var flowerData = this.data.Flowers.Find(id);
+
+            if (flowerData == null)
+            {
+                return false;
+            }
+
+            this.data.Flowers.Remove(flowerData);
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         /*       public IEnumerable<FlowerServiceModel> ByUser(string userId)
                 => this.GetFlowers(this.data.Flowers
                     .Where(f => f.FlowerName == userId));*/

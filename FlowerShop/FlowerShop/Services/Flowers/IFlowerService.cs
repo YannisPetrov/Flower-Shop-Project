@@ -20,6 +20,8 @@
                  double flowerPrice,
                  string imageURL);
 
+        bool Delete(int id);
+
         /*        IEnumerable<FlowerServiceModel> ByUser(string userId);*/
 
     }

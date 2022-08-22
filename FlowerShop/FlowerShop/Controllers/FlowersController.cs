@@ -11,12 +11,10 @@
     public class FlowersController : Controller
     {
         private readonly IFlowerService flowers;
-        private readonly FlowerShopDbContext data;
 
-        public FlowersController(IFlowerService flowers, FlowerShopDbContext data)
+        public FlowersController(IFlowerService flowers)
         {
             this.flowers = flowers;
-            this.data = data;
         }
 
         public IActionResult Cart()
@@ -25,7 +23,7 @@
             return View();
         }
 
-        public IActionResult Add() => View();
+        /*public IActionResult Add() => View();*/
 
         [HttpGet]
         public IActionResult All([FromQuery]AllFlowersQueryModel query)
@@ -68,6 +66,13 @@
                 FlowerPrice = flower.FlowerPrice,
                 ImageURL = flower.ImageURL
             });
+        }
+        public IActionResult Delete(int id)
+        {
+            this.flowers.Delete(id);
+
+            return RedirectToAction(nameof(All));
+
         }
 
 

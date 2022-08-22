@@ -30,7 +30,18 @@
         else if (userIsAdmin)
         {
             <a asp-controller="Flowers" asp-action="Edit" asp-route-id="@flower.Id" class="btn btn-custom">Edit</a>
-            <a asp-controller="Flowers" asp-action="Delete" asp-route-id="@flower.Id" class="btn btn-custom">Delete</a>
+            <a asp-controller="Flowers" asp-action="Delete" asp-route-id="@flower.Id" onclick="DeleteFlower()" class="btn btn-custom">Delete</a>
+
+                 <script>
+                           function DeleteFlower() {
+                             
+                             if (confirm("Are you sure you want to DELETE this flower?")) {
+                               
+                             } 
+                             
+                           }
+                 </script>
+
         }
 }  
   </div>

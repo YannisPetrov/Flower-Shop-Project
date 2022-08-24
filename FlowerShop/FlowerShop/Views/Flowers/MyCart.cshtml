@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CartModel>
+@using FlowerShop.Data.Models
+@using FlowerShop.Services.Carts
+
+    
+    @{
+    ViewBag.Title = "My Flowers";
+    }
+
+@{
+
+        
+   <div class="row">
+    @foreach(var flower in Model){
+     <div class="col-md-4">
+
+      <div class="card card-margin" style="width: 10rem;">
+       <img class="card-img-top mb-3" src="@flower.ImageURL">
+        <div class="card-body text-center .custom-pink-bg">
+
+          <h5 class="card-title">@flower.FlowerName</h5>
+          <p class="card-text">@flower.FlowerPrice $</p>
+
+          <a asp-controller="Flowers" asp-action="DeleteFromCart" asp-route-id="@flower.FlowerId" class="btn btn-custom">Delete</a>
+
+                  
+        </div>
+      </div>
+
+     </div>
+    }
+   </div>
+ }
+

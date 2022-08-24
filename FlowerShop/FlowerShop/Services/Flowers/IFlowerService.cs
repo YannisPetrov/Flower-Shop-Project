@@ -1,7 +1,5 @@
 ﻿ namespace FlowerShop.Services.Flowers
 {
-    using FlowerShop.Models;
-    using FlowerShop.Services;
     public interface IFlowerService
     {
         FlowerQueryServiceModel All(
@@ -9,7 +7,15 @@
             int currentPage, 
             int flowersPerPage);
 
+        
+
         FlowerServiceModel Details(int id);
+
+        int AddToCart(string userId,
+                      int flowerId,
+                      string flowerName,
+                      double flowerPrice,
+                      string imageUrl);
 
         int Create(string flowerName,
                    double flowerPrice,
@@ -21,8 +27,7 @@
                  string imageURL);
 
         bool Delete(int id);
-
-        /*        IEnumerable<FlowerServiceModel> ByUser(string userId);*/
+        bool DeleteFromCart(int id);
 
     }
 }

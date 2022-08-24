@@ -23,8 +23,13 @@
 
         @if (!userIsAdmin)
         {
-            <form method="post">
-             <a asp-controller="Flowers" asp-action="AddToCart" class="btn btn-custom">AddToCart</a>
+            <form method="post" asp-controller="Flowers" asp-action="AddToCart">
+                <input name="UserId" class="d-none" value="@userId">
+                <input name="FlowerId" class="d-none" value="@flower.Id">
+                <input name="FlowerName" class="d-none" value="@flower.FlowerName">
+                <input name="FlowerPrice" class="d-none" value="@flower.FlowerPrice">
+                <input name="ImageURL" class="d-none" value="@flower.ImageURL">
+                <input class="btn btn-custom" type="submit" value="Add to Cart">
            </form>
         }
         else if (userIsAdmin)

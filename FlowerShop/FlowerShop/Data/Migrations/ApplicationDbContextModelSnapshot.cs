@@ -43,7 +43,7 @@ namespace FlowerShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Flowers");
+                    b.ToTable("Flowers", (string)null);
                 });
 
             modelBuilder.Entity("FlowerShop.Data.Models.User", b =>

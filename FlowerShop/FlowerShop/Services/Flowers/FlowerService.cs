@@ -4,22 +4,21 @@
     using System.Linq;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
-    using FlowerShop.Models;
-    using FlowerShop.Services;
+    using FlowerShop.Services.Carts;
 
     public class FlowerService : IFlowerService
     {
         private readonly FlowerShopDbContext data;
 
-        public FlowerService(FlowerShopDbContext data) 
-            => this.data = data;
-        
+
+        public FlowerService(FlowerShopDbContext data)
+        =>   this.data = data;
 
         public FlowerQueryServiceModel All(
             string searchTerm,
             int currentPage,
-            int flowersPerPage)
-        {
+            int flowersPerPage){
+
             var flowersQuery = this.data.Flowers.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -55,6 +54,30 @@
                 ImageURL = f.ImageURL
             })
             .FirstOrDefault();
+
+
+        public int AddToCart(string userId,
+                             int flowerId,
+                             string flowerName,
+                             double flowerPrice,
+                             string imageUrl)
+        {
+            var cartData = new Cart
+            {
+                UserId = userId,
+                FlowerId = flowerId,
+                FlowerName = flowerName,
+                FlowerPrice = flowerPrice,
+                ImageURL = imageUrl
+            };
+
+            this.data.Carts.Add(cartData);
+
+            this.data.SaveChanges();
+
+            return cartData.FlowerId;
+        }
+
 
         public int Create(string flowerName, double flowerPrice, string imageURL)
         {
@@ -107,10 +130,21 @@
             return true;
         }
 
-        /*       public IEnumerable<FlowerServiceModel> ByUser(string userId)
-                => this.GetFlowers(this.data.Flowers
-                    .Where(f => f.FlowerName == userId));*/
+        public bool DeleteFromCart(int id)
+        {
+            var cartData = this.data.Carts.Find(id);
 
+            if (cartData == null)
+            {
+                return false;
+            }
+
+            this.data.Carts.Remove(cartData);
+
+            this.data.SaveChanges();
+
+            return true;
+        }
 
         private static IEnumerable<FlowerServiceModel> GetFlowers(IQueryable<Flower> flowerQuery)
             => flowerQuery.Select(f => new FlowerServiceModel
@@ -121,7 +155,8 @@
                 ImageURL = f.ImageURL
             })
             .ToList();
+            
 
-        
+
     }
 }

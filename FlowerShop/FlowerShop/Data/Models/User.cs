@@ -9,5 +9,8 @@
     {
         [MaxLength(FullNameMaxLength)]
         public string FullName { get; set; }
+
+        public ICollection<Cart> Cart { get; set; }
+
     }
 }

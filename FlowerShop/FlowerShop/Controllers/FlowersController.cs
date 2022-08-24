@@ -1,29 +1,25 @@
 ﻿namespace FlowerShop.Controllers
 {
-    using System;
+
+    using FlowerShop.Models.Flowers;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
-    using FlowerShop.Infrastructure.Extensions;
-    using FlowerShop.Models.Flowers;
     using FlowerShop.Services.Flowers;
+    using FlowerShop.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using FlowerShop.Services.Carts;
 
     public class FlowersController : Controller
     {
         private readonly IFlowerService flowers;
+        private readonly FlowerShopDbContext data;
 
-        public FlowersController(IFlowerService flowers)
+
+        public FlowersController(IFlowerService flowers, FlowerShopDbContext data)
         {
             this.flowers = flowers;
+            this.data = data;
         }
-
-        public IActionResult Cart()
-        {
-            /*var myFlowers = this.flowers.ByUser(this.User.Id());*/
-            return View();
-        }
-
-        /*public IActionResult Add() => View();*/
 
         [HttpGet]
         public IActionResult All([FromQuery]AllFlowersQueryModel query)
@@ -40,6 +36,45 @@
 
             return View(query);
         }
+
+
+           public IActionResult MyCart()
+           {
+
+            var userId = this.User.Id();
+
+            var flowersByCart = this.data.Carts
+                .Where(c => c.UserId == userId)
+                .Select(f => new CartModel
+                {
+                    FlowerId = f.FlowerId,
+                    FlowerName = f.FlowerName,
+                    FlowerPrice = f.FlowerPrice,
+                    ImageURL = f.ImageURL
+                })
+                .ToList();
+
+            
+
+            return View(flowersByCart);
+
+           }
+
+
+        [HttpPost]
+        public IActionResult AddToCart(string userId,
+                                       int flowerId,
+                                       string flowerName,
+                                       double flowerPrice,
+                                       string imageUrl)
+        {
+
+            this.flowers.AddToCart(userId,flowerId, flowerName, flowerPrice, imageUrl);
+
+            return RedirectToAction(nameof(MyCart));
+        }
+
+
 
         [HttpPost]
         public IActionResult Add(FlowerFormModel flower)
@@ -72,7 +107,13 @@
             this.flowers.Delete(id);
 
             return RedirectToAction(nameof(All));
+        }
 
+        public IActionResult DeleteFromCart(int id)
+        {
+            this.flowers.Delete(id);
+
+            return RedirectToAction(nameof(MyCart));
         }
 
 
@@ -93,6 +134,16 @@
 
             return RedirectToAction(nameof(All));
 
+        }
+
+        public IActionResult MyOrders()
+        {
+            return View();
+        }
+
+        public IActionResult AllOrders()
+        {
+            return View();
         }
     }
 }

@@ -11,6 +11,7 @@
         public string FullName { get; set; }
 
         public ICollection<Cart> Cart { get; set; }
+        public ICollection<Orders> Orders { get; set; }
 
     }
 }

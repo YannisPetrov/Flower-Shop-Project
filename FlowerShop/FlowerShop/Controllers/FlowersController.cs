@@ -8,6 +8,7 @@
     using FlowerShop.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using FlowerShop.Services.Carts;
+    using FlowerShop.Services.Orders;
 
     public class FlowersController : Controller
     {
@@ -37,8 +38,26 @@
             return View(query);
         }
 
+        public IActionResult Add() => View();
+        
+        
+        [HttpPost]
+        public IActionResult Add(FlowerFormModel flower)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(flower);
+            }
 
-           public IActionResult MyCart()
+            this.flowers.Create(flower.FlowerName,
+                                flower.FlowerPrice,
+                                flower.ImageURL);
+
+            return RedirectToAction(nameof(All));
+        }
+
+
+        public IActionResult MyCart()
            {
 
             var userId = this.User.Id();
@@ -74,22 +93,16 @@
             return RedirectToAction(nameof(MyCart));
         }
 
-
-
-        [HttpPost]
-        public IActionResult Add(FlowerFormModel flower)
+        public IActionResult Order(string userId,
+                                   string flowersInCart, 
+                                   double totalPrice)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(flower);
-            }
 
-            this.flowers.Create(flower.FlowerName,
-                                flower.FlowerPrice,
-                                flower.ImageURL);
+            this.flowers.Order(userId, flowersInCart, totalPrice);
 
-            return RedirectToAction(nameof(All));
-        } 
+            return RedirectToAction(nameof(MyOrders));
+        }
+
 
         public IActionResult Edit(int id)
         {
@@ -109,9 +122,10 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult DeleteFromCart(int id)
+        [HttpPost]
+        public IActionResult DeleteFromCart(int flowerInCartId)
         {
-            this.flowers.Delete(id);
+            this.flowers.DeleteFromCart(flowerInCartId);
 
             return RedirectToAction(nameof(MyCart));
         }
@@ -138,12 +152,34 @@
 
         public IActionResult MyOrders()
         {
-            return View();
+            var userId = this.User.Id();
+
+            var orders = this.data.Orders
+                .Where(c => c.UserId == userId)
+                .Select(f => new OrderModel
+                {
+                    Flowers = f.Flowers,
+                    TotalPrice = f.TotalPrice
+
+                })
+                .ToList();
+
+            return View(orders);
         }
 
         public IActionResult AllOrders()
         {
-            return View();
+
+            var orders = this.data.Orders
+                .Select(f => new OrderModel
+                {
+                    Flowers = f.Flowers,
+                    TotalPrice = f.TotalPrice
+
+                })
+                .ToList();
+
+            return View(orders);
         }
     }
 }

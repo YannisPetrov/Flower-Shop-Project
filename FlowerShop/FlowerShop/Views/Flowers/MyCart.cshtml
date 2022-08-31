@@ -1,18 +1,29 @@
-﻿@model IEnumerable<CartModel>
+﻿@model List<CartModel>
 @using FlowerShop.Data.Models
 @using FlowerShop.Services.Carts
+@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
     
     @{
     ViewBag.Title = "My Flowers";
     }
 
-@{
+    @if(!Model.Any())
+            {
+                <h5 class="card-title">Your Cart Is Currently Empty. Add Something To It!</h5>
+                <a  class="btn btn-custom" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
+            }
 
-        
-   <div class="row">
+@if(Model.Any()){
+    var userId = User.Id();
+
+           <div class="row">
+           
     @foreach(var flower in Model){
-     <div class="col-md-4">
+            
+            <div class="col-md-4">
 
       <div class="card card-margin" style="width: 10rem;">
        <img class="card-img-top mb-3" src="@flower.ImageURL">
@@ -22,13 +33,30 @@
           <p class="card-text">@flower.FlowerPrice $</p>
 
           <a asp-controller="Flowers" asp-action="DeleteFromCart" asp-route-id="@flower.FlowerId" class="btn btn-custom">Delete</a>
-
                   
         </div>
       </div>
-
      </div>
     }
    </div>
- }
+
+   <form method="post" asp-controller="Flowers" asp-action="Order">
+    @foreach (var flowerInCart in Model)
+    {
+            
+        
+                @for (double totalPrice = 0; totalPrice < Model.Count; totalPrice += flowerInCart.FlowerPrice)
+                   {
+                 <input name="flowerInCartId" class="d-none" value="@totalPrice">
+                   }
+                   <input name="flowerInCartId" class="d-none" value="@flowerInCart.FlowerId">
+                
+          
+    }
+    <input class="btn btn-custom" type="submit" value="ORDER">
+    </form>
+
+
+}
+      
 

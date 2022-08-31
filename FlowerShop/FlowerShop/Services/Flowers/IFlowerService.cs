@@ -16,6 +16,9 @@
                       string flowerName,
                       double flowerPrice,
                       string imageUrl);
+        int Order(string userId,
+                  string flowersInCart,
+                  double totalPrice);
 
         int Create(string flowerName,
                    double flowerPrice,
@@ -27,7 +30,7 @@
                  string imageURL);
 
         bool Delete(int id);
-        bool DeleteFromCart(int id);
+        bool DeleteFromCart(int flowerInCartId);
 
     }
 }

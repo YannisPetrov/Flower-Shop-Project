@@ -6,11 +6,11 @@
 @inject UserManager<User> UserManager
 
 
-    <div class="row">
+    <div class="row" style="margin-left: 75px;">
 @foreach(var flower in Model){
-    <div class="col-md-4">
+    <div class="col-md-2">
 
-        <div class="card card-margin" style="width: 18rem;">
+        <div class="card" style="width: 11rem;">
   <img class="card-img-top mb-3" src="@flower.ImageURL">
   <div class="card-body text-center .custom-pink-bg">
     <h5 class="card-title">@flower.FlowerName</h5>
@@ -30,7 +30,7 @@
                 <input name="FlowerPrice" class="d-none" value="@flower.FlowerPrice">
                 <input name="ImageURL" class="d-none" value="@flower.ImageURL">
                 <input class="btn btn-custom" type="submit" value="Add to Cart">
-           </form>
+            </form>
         }
         else if (userIsAdmin)
         {

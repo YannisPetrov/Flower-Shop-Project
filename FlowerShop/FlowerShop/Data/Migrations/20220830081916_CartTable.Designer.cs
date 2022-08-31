@@ -4,6 +4,7 @@ using FlowerShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlowerShop.Data.Migrations
 {
     [DbContext(typeof(FlowerShopDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220830081916_CartTable")]
+    partial class CartTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,32 +81,6 @@ namespace FlowerShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Flowers");
-                });
-
-            modelBuilder.Entity("FlowerShop.Data.Models.Orders", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
-
-                    b.Property<string>("Flowers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("FlowerShop.Data.Models.User", b =>
@@ -333,17 +309,6 @@ namespace FlowerShop.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FlowerShop.Data.Models.Orders", b =>
-                {
-                    b.HasOne("FlowerShop.Data.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -403,8 +368,6 @@ namespace FlowerShop.Data.Migrations
             modelBuilder.Entity("FlowerShop.Data.Models.User", b =>
                 {
                     b.Navigation("Cart");
-
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

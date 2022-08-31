@@ -5,7 +5,7 @@
     {
         [Required]
         [Display(Name = "Flower Name")]
-        [StringLength(15,MinimumLength = 3)]
+        [StringLength(35,MinimumLength = 3)]
         public string FlowerName { get; init; }
 
         [Required]

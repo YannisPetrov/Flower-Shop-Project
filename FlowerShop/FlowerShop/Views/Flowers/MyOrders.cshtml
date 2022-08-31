@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<OrderModel>
+@using FlowerShop.Data.Models
+@using FlowerShop.Services.Carts
+@using FlowerShop.Services.Orders
+@using Microsoft.AspNetCore.Identity
+    
+    @{
+    ViewBag.Title = "My Flowers";
+    }
+
+    @if(!Model.Any())
+            {
+                <h5 class="card-title">You Have Not Made Any Orders. Buy Something!</h5>
+                <a  class="btn btn-custom" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
+            }
+
+            @if(Model.Any()){
+
+               <div class="row">
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Order#</th>
+                          <th scope="col">Flower</th>
+                          <th scope="col">Price</th>
+                        </tr>
+                      </thead>
+
+                    
+                 @foreach(var order in Model){
+                      <tbody>
+                        <tr>
+                          <th scope="row">@order.OrderId</th>
+                          <td>@order.Flowers</td>
+                          <td>@order.TotalPrice</td>
+                        </tr>
+                      </tbody>
+                 }
+                  </table>
+               </div>
+
+            }

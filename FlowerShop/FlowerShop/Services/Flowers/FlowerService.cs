@@ -4,7 +4,6 @@
     using System.Linq;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
-    using FlowerShop.Services.Carts;
 
     public class FlowerService : IFlowerService
     {
@@ -78,6 +77,37 @@
             return cartData.FlowerId;
         }
 
+        public int Order(string userId,
+                         string flowersInCart,
+                         double totalPrice)
+        {
+            var ivan = this.data
+                            .Carts
+                            .AsQueryable()
+                            .Where(f => f.UserId == userId)
+                            .Select(b => new Orders
+                            {
+                                UserId = b.UserId,
+                                Flowers = b.FlowerName,
+                                TotalPrice = b.FlowerPrice
+                            });
+
+
+            var orderData = new Orders
+                {
+                    UserId = userId,
+                    Flowers = flowersInCart,
+                    TotalPrice = totalPrice
+                };
+
+/*            this.data.Database.ExecuteSqlCommand("insert into student(studentname) 
+            values('New Student')");*/
+
+            this.data.SaveChanges();
+
+            return orderData.OrderId;
+        }
+
 
         public int Create(string flowerName, double flowerPrice, string imageURL)
         {
@@ -130,9 +160,9 @@
             return true;
         }
 
-        public bool DeleteFromCart(int id)
+        public bool DeleteFromCart(int flowerInCartId)
         {
-            var cartData = this.data.Carts.Find(id);
+            var cartData = this.data.Carts.Find(flowerInCartId);
 
             if (cartData == null)
             {
@@ -155,8 +185,5 @@
                 ImageURL = f.ImageURL
             })
             .ToList();
-            
-
-
     }
 }

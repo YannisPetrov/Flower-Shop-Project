@@ -1,6 +1,5 @@
 ﻿namespace FlowerShop.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
     public class Cart
     {
         public int CartId { get; set; }

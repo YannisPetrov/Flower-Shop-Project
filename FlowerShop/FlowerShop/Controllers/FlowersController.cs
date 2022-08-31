@@ -94,11 +94,11 @@
         }
 
         public IActionResult Order(string userId,
-                                   string flowersInCart, 
+                                   string flowers, 
                                    double totalPrice)
         {
 
-            this.flowers.Order(userId, flowersInCart, totalPrice);
+            this.flowers.Order(userId, flowers, totalPrice);
 
             return RedirectToAction(nameof(MyOrders));
         }

@@ -19,7 +19,7 @@
 @if(Model.Any()){
     var userId = User.Id();
 
-           <div class="row">
+
            
     @foreach(var flower in Model){
             
@@ -30,6 +30,7 @@
         <div class="card-body text-center .custom-pink-bg">
 
           <h5 class="card-title">@flower.FlowerName</h5>
+
           <p class="card-text">@flower.FlowerPrice $</p>
 
                <form method="post" asp-controller="Flowers" asp-action="DeleteFromCart">
@@ -38,28 +39,33 @@
                 <input class="btn btn-custom" type="submit" value="Remove">
                </form>
           
-                  
+          
         </div>
       </div>
      </div>
     }
-   </div>
-
-   <form method="post" asp-controller="Flowers" asp-action="Order">
-    @foreach (var flowerInCart in Model)
-    {
+    <form method="post" asp-controller="Flowers" asp-action="Order">
+        <input name="UserId" class="d-none" value="@userId">
+        @foreach (var flower in Model)
+        {
+            string flowerName = flower.FlowerName;
             
-        
-                @for (double totalPrice = 0; totalPrice < Model.Count; totalPrice += flowerInCart.FlowerPrice)
-                   {
-                 <input name="flowerInCartId" class="d-none" value="@totalPrice">
-                   }
-                   <input name="flowerInCartId" class="d-none" value="@flowerInCart.FlowerId">
-                
-          
-    }
-    <input class="btn btn-custom" type="submit" value="ORDER">
+            
+
+            <input name="Flowers" class="d-none" value="@flowerName">
+
+            <input name="TotalPrice" class="d-none" value="@flower.FlowerPrice">
+
+        }
+        <input class="btn btn-custom" type="submit" value="ORDER">
+
     </form>
+        
+
+        
+
+    
+    
 
 
 }

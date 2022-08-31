@@ -78,30 +78,27 @@
         }
 
         public int Order(string userId,
-                         string flowersInCart,
+                         string flowers,
                          double totalPrice)
         {
-            var ivan = this.data
-                            .Carts
-                            .AsQueryable()
-                            .Where(f => f.UserId == userId)
-                            .Select(b => new Orders
-                            {
-                                UserId = b.UserId,
-                                Flowers = b.FlowerName,
-                                TotalPrice = b.FlowerPrice
-                            });
-
+            var cartData = this.data
+                .Carts
+                .Where(c => c.UserId == userId)
+                .FirstOrDefault();
 
             var orderData = new Orders
                 {
                     UserId = userId,
-                    Flowers = flowersInCart,
+                    Flowers = flowers,
                     TotalPrice = totalPrice
                 };
 
-/*            this.data.Database.ExecuteSqlCommand("insert into student(studentname) 
-            values('New Student')");*/
+            /*            this.data.Database.ExecuteSqlCommand("insert into student(studentname) 
+                        values('New Student')");*/
+
+            this.data.Orders.Add(orderData);
+
+            this.data.Carts.Remove(cartData);
 
             this.data.SaveChanges();
 

@@ -30,7 +30,7 @@
                  string imageURL);
 
         bool Delete(int id);
-        bool DeleteFromCart(int flowerInCartId);
+        bool DeleteFromCart(string userId, int flowerInCartId);
 
     }
 }

@@ -32,7 +32,12 @@
           <h5 class="card-title">@flower.FlowerName</h5>
           <p class="card-text">@flower.FlowerPrice $</p>
 
-          <a asp-controller="Flowers" asp-action="DeleteFromCart" asp-route-id="@flower.FlowerId" class="btn btn-custom">Delete</a>
+               <form method="post" asp-controller="Flowers" asp-action="DeleteFromCart">
+                   <input name="userId" class="d-none" value="@userId">
+                   <input name="flowerInCartId" class="d-none" value="@flower.FlowerId">
+                <input class="btn btn-custom" type="submit" value="Remove">
+               </form>
+          
                   
         </div>
       </div>

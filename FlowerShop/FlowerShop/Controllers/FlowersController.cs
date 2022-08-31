@@ -123,9 +123,9 @@
         }
 
         [HttpPost]
-        public IActionResult DeleteFromCart(int flowerInCartId)
+        public IActionResult DeleteFromCart(string userId, int flowerInCartId)
         {
-            this.flowers.DeleteFromCart(flowerInCartId);
+            this.flowers.DeleteFromCart(userId, flowerInCartId);
 
             return RedirectToAction(nameof(MyCart));
         }

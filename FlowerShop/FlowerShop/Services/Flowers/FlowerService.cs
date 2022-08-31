@@ -160,9 +160,13 @@
             return true;
         }
 
-        public bool DeleteFromCart(int flowerInCartId)
+        public bool DeleteFromCart(string userId, int flowerInCartId)
         {
-            var cartData = this.data.Carts.Find(flowerInCartId);
+            var cartData = this.data
+                .Carts
+                .Where(c => c.UserId == userId)
+                .Where(c => c.FlowerId == flowerInCartId)
+                .FirstOrDefault();
 
             if (cartData == null)
             {

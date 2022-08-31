@@ -6,4 +6,9 @@
 @using FlowerShop.Infrastructure.Extensions
 @using FlowerShop.Models.Api.Flowers
 @using FlowerShop.Services.Flowers
+@using FlowerShop.Services.Carts
+@using FlowerShop.Services.Orders
+@using Microsoft.AspNetCore.Identity
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager

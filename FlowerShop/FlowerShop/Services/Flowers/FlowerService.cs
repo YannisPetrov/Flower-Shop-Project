@@ -23,12 +23,14 @@
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 flowersQuery = flowersQuery.Where(f =>
-                f.FlowerName.ToLower().Contains(searchTerm.ToLower()));
+                f.FlowerName.ToLower()
+                .Contains(searchTerm.ToLower()));
             }
 
             var totalFlowers = flowersQuery.Count();
 
-            var flowers = GetFlowers(flowersQuery
+            var flowers =
+                 GetFlowers(flowersQuery
                 .Skip((currentPage - 1) * flowersPerPage)
                 .Take(flowersPerPage));
 
@@ -93,9 +95,6 @@
                     TotalPrice = totalPrice
                 };
 
-            /*            this.data.Database.ExecuteSqlCommand("insert into student(studentname) 
-                        values('New Student')");*/
-
             this.data.Orders.Add(orderData);
 
             this.data.Carts.Remove(cartData);
@@ -106,7 +105,9 @@
         }
 
 
-        public int Create(string flowerName, double flowerPrice, string imageURL)
+        public int Create(string flowerName,
+                          double flowerPrice,
+                          string imageURL)
         {
             var flowerData = new Flower
             {
@@ -122,7 +123,10 @@
             return flowerData.Id;
         }
 
-        public bool Edit(int id, string flowerName, double flowerPrice, string imageURL)
+        public bool Edit(int id,
+                         string flowerName,
+                         double flowerPrice,
+                         string imageURL)
         {
             var flowerData = this.data.Flowers.Find(id);
 

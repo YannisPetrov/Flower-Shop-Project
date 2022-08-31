@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
+﻿#nullable disable
 
 namespace FlowerShop.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
     public partial class FlowerTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

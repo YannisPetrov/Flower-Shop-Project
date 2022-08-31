@@ -1,9 +1,7 @@
 ﻿namespace FlowerShop.Controllers
 {
-
     using FlowerShop.Models.Flowers;
     using FlowerShop.Data;
-    using FlowerShop.Data.Models;
     using FlowerShop.Services.Flowers;
     using FlowerShop.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Mvc;
@@ -39,7 +37,6 @@
         }
 
         public IActionResult Add() => View();
-        
         
         [HttpPost]
         public IActionResult Add(FlowerFormModel flower)
@@ -88,7 +85,11 @@
                                        string imageUrl)
         {
 
-            this.flowers.AddToCart(userId,flowerId, flowerName, flowerPrice, imageUrl);
+            this.flowers.AddToCart(userId, 
+                                   flowerId, 
+                                   flowerName, 
+                                   flowerPrice, 
+                                   imageUrl);
 
             return RedirectToAction(nameof(MyCart));
         }
@@ -123,7 +124,8 @@
         }
 
         [HttpPost]
-        public IActionResult DeleteFromCart(string userId, int flowerInCartId)
+        public IActionResult DeleteFromCart(string userId,
+                                            int flowerInCartId)
         {
             this.flowers.DeleteFromCart(userId, flowerInCartId);
 

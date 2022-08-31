@@ -1,4 +1,4 @@
-﻿ namespace FlowerShop.Services.Flowers
+﻿namespace FlowerShop.Services.Flowers
 {
     public interface IFlowerService
     {
@@ -6,8 +6,6 @@
             string searchTerm,
             int currentPage, 
             int flowersPerPage);
-
-        
 
         FlowerServiceModel Details(int id);
 

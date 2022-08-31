@@ -1,7 +1,6 @@
 ﻿namespace FlowerShop.Infrastructure.Extensions
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;

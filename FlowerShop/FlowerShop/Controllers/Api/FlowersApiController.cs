@@ -1,6 +1,5 @@
 ﻿namespace FlowerShop.Controllers.Api
 {
-    using FlowerShop.Data;
     using FlowerShop.Models.Api.Flowers;
     using FlowerShop.Services.Flowers;
     using Microsoft.AspNetCore.Mvc;

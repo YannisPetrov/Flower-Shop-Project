@@ -1,73 +1,54 @@
 ﻿@model List<CartModel>
-@using FlowerShop.Data.Models
-@using FlowerShop.Services.Carts
-@using Microsoft.AspNetCore.Identity
-
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
     
-    @{
-    ViewBag.Title = "My Flowers";
-    }
+ @{
+ ViewBag.Title = "My Flowers";
+ }
 
-    @if(!Model.Any())
-            {
-                <h5 class="card-title">Your Cart Is Currently Empty. Add Something To It!</h5>
-                <a  class="btn btn-custom" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
-            }
+  @if(!Model.Any())
+  {
+    <h5 class="card-title">Your Cart Is Currently Empty. Add Something To It!</h5>
+    <a  class="btn btn-custom" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
+  }
 
-@if(Model.Any()){
-    var userId = User.Id();
+   @if(Model.Any())
+   {
+       var userId = User.Id();
+   
+       @foreach(var flower in Model){
+               
+        <div class="col-md-4">
+   
+         <div class="card card-margin" style="width: 10rem;">
+          <img class="card-img-top mb-3" src="@flower.ImageURL">
+           <div class="card-body text-center .custom-pink-bg">
+   
+             <h5 class="card-title">@flower.FlowerName</h5>
+   
+             <p class="card-text">@flower.FlowerPrice $</p>
+   
+                  <form method="post" asp-controller="Flowers" asp-action="DeleteFromCart">
+                      <input name="userId" class="d-none" value="@userId">
+                      <input name="flowerInCartId" class="d-none" value="@flower.FlowerId">
+                      <input class="btn btn-custom" type="submit" value="Remove">
+                  </form>
 
-
-           
-    @foreach(var flower in Model){
-            
-            <div class="col-md-4">
-
-      <div class="card card-margin" style="width: 10rem;">
-       <img class="card-img-top mb-3" src="@flower.ImageURL">
-        <div class="card-body text-center .custom-pink-bg">
-
-          <h5 class="card-title">@flower.FlowerName</h5>
-
-          <p class="card-text">@flower.FlowerPrice $</p>
-
-               <form method="post" asp-controller="Flowers" asp-action="DeleteFromCart">
-                   <input name="userId" class="d-none" value="@userId">
-                   <input name="flowerInCartId" class="d-none" value="@flower.FlowerId">
-                <input class="btn btn-custom" type="submit" value="Remove">
-               </form>
-          
-          
+           </div>
+         </div>
         </div>
-      </div>
-     </div>
-    }
-    <form method="post" asp-controller="Flowers" asp-action="Order">
-        <input name="UserId" class="d-none" value="@userId">
-        @foreach (var flower in Model)
-        {
-            string flowerName = flower.FlowerName;
-            
-            
+       }
+       <form method="post" asp-controller="Flowers" asp-action="Order">
+           <input name="UserId" class="d-none" value="@userId">
+           @foreach (var flower in Model)
+           {
+               string flowerName = flower.FlowerName;
 
-            <input name="Flowers" class="d-none" value="@flowerName">
+               <input name="Flowers" class="d-none" value="@flowerName">
+   
+               <input name="TotalPrice" class="d-none" value="@flower.FlowerPrice">
+   
+           }
+           <input class="btn btn-custom" type="submit" value="ORDER">
+   
+       </form>
 
-            <input name="TotalPrice" class="d-none" value="@flower.FlowerPrice">
-
-        }
-        <input class="btn btn-custom" type="submit" value="ORDER">
-
-    </form>
-        
-
-        
-
-    
-    
-
-
-}
-      
-
+   }

@@ -1,25 +1,23 @@
 ﻿@model IEnumerable<FlowerServiceModel>
-@using FlowerShop.Data.Models
-@using Microsoft.AspNetCore.Identity
-
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
 
 
-    <div class="row" style="margin-left: 75px;">
-@foreach(var flower in Model){
-    <div class="col-md-2">
 
-        <div class="card" style="width: 11rem;">
-  <img class="card-img-top mb-3" src="@flower.ImageURL">
-  <div class="card-body text-center .custom-pink-bg">
-    <h5 class="card-title">@flower.FlowerName</h5>
+  <div class="row" style="margin-left: 75px;">
+    @foreach(var flower in Model)
+    {
+      <div class="col-md-2">
 
-    <p class="card-text">@flower.FlowerPrice $</p>
-    @if (SignInManager.IsSignedIn(User))
-{
-        var userId = User.Id();
-        var userIsAdmin = User.IsAdmin();
+       <div class="card" style="width: 11rem;">
+        <img class="card-img-top mb-3" src="@flower.ImageURL">
+         <div class="card-body text-center .custom-pink-bg">
+
+          <h5 class="card-title">@flower.FlowerName</h5>
+
+          <p class="card-text">@flower.FlowerPrice $</p>
+       @if (SignInManager.IsSignedIn(User))
+       {
+         var userId = User.Id();
+         var userIsAdmin = User.IsAdmin();
 
         @if (!userIsAdmin)
         {
@@ -37,21 +35,21 @@
             <a asp-controller="Flowers" asp-action="Edit" asp-route-id="@flower.Id" class="btn btn-custom">Edit</a>
             <a asp-controller="Flowers" asp-action="Delete" asp-route-id="@flower.Id" onclick="DeleteFlower()" class="btn btn-custom">Delete</a>
 
-                 <script>
-                           function DeleteFlower() {
-                             
-                             if (confirm("Are you sure you want to DELETE this flower?")) {
-                               
-                             } 
-                             
-                           }
-                 </script>
+              <script>
+                function DeleteFlower()
+                { 
+                    
+                 if (confirm("Are you sure you want to DELETE this flower?"))
+                 {
+                 } 
+              
+                 }
+              </script>
 
         }
-}  
+       }  
+         </div>
+       </div>
+      </div>
+    }
   </div>
-</div>
-
-    </div>
-}
-</div>

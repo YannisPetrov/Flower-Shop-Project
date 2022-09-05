@@ -1,13 +1,13 @@
 ﻿@model List<OrderModel>
     
     @{
-    ViewBag.Title = "My Flowers";
+    ViewBag.Title = "My Orders";
     }
 
     @if(!Model.Any())
     {
-       <h5 class="card-title">You Have Not Made Any Orders. Buy Something!</h5>
-       <a  class="btn btn-custom" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
+       <h5 class="text-center" style="margin-top: 155px">You Have Not Made Any Orders. Buy Something!</h5>
+       <a  class="btn btn-custom" style="margin-left: 600px" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
     }
 
       @if(Model.Any()){
@@ -16,7 +16,7 @@
             <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Order#</th>
+                    <th scope="col">Order #</th>
                     <th scope="col">Flower</th>
                     <th scope="col">Price</th>
                   </tr>

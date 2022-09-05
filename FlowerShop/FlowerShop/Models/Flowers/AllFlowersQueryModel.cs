@@ -6,7 +6,7 @@
 
     public class AllFlowersQueryModel
     {
-        public const int FlowersPerPage = 7;
+        public const int FlowersPerPage = 6;
 
         public IEnumerable<string> FlowerName { get; init; }
 

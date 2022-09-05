@@ -1,7 +1,7 @@
 ﻿@model List<OrderModel>
     
     @{
-    ViewBag.Title = "My Flowers";
+    ViewBag.Title = "All Orders";
     }
 
     @if(!Model.Any())
@@ -16,13 +16,12 @@
                   <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th scope="col">Order#</th>
+                          <th scope="col">Order #</th>
                           <th scope="col">Flower</th>
                           <th scope="col">Price</th>
                         </tr>
                       </thead>
 
-                    
                  @foreach(var order in Model){
                       <tbody>
                         <tr>

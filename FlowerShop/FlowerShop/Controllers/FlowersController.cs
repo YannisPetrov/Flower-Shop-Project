@@ -13,7 +13,7 @@
         private readonly IFlowerService flowers;
         private readonly FlowerShopDbContext data;
 
-
+        //Initializing the constructor
         public FlowersController(IFlowerService flowers, FlowerShopDbContext data)
         {
             this.flowers = flowers;
@@ -116,22 +116,6 @@
                 ImageURL = flower.ImageURL
             });
         }
-        public IActionResult Delete(int id)
-        {
-            this.flowers.Delete(id);
-
-            return RedirectToAction(nameof(All));
-        }
-
-        [HttpPost]
-        public IActionResult DeleteFromCart(string userId,
-                                            int flowerInCartId)
-        {
-            this.flowers.DeleteFromCart(userId, flowerInCartId);
-
-            return RedirectToAction(nameof(MyCart));
-        }
-
 
         [HttpPost]
         public IActionResult Edit(int id, FlowerFormModel flower)
@@ -146,10 +130,25 @@
                               flower.FlowerPrice,
                               flower.ImageURL);
 
-            
+
 
             return RedirectToAction(nameof(All));
 
+        }
+        public IActionResult Delete(int id)
+        {
+            this.flowers.Delete(id);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteFromCart(string userId,
+                                            int flowerInCartId)
+        {
+            this.flowers.DeleteFromCart(userId, flowerInCartId);
+
+            return RedirectToAction(nameof(MyCart));
         }
 
         public IActionResult MyOrders()

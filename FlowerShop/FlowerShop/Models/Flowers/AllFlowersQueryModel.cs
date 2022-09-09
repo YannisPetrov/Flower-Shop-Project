@@ -8,8 +8,6 @@
     {
         public const int FlowersPerPage = 6;
 
-        public IEnumerable<string> FlowerName { get; init; }
-
         [Display(Name = "Search by Text...")]
         public string SearchTerm { get; init; }
 

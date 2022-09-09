@@ -5,6 +5,7 @@
     using System.Diagnostics;
     public class HomeController : Controller
     {
+        // Auto-Generated Code
 
         public IActionResult Index() => View();
 

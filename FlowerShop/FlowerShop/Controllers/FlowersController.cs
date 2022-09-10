@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using FlowerShop.Services.Carts;
     using FlowerShop.Services.Orders;
+    using Microsoft.AspNetCore.Authorization;
 
     public class FlowersController : Controller
     {
@@ -36,6 +37,14 @@
             return View(query);
         }
 
+        public IActionResult Details(int id)
+        {
+            var flower = this.flowers.Details(id);
+
+            return View(flower);
+        }
+
+        [Authorize]
         public IActionResult Add() => View();
         
         [HttpPost]
@@ -53,7 +62,7 @@
             return RedirectToAction(nameof(All));
         }
 
-
+        [Authorize]
         public IActionResult MyCart()
            {
 
@@ -151,6 +160,7 @@
             return RedirectToAction(nameof(MyCart));
         }
 
+        [Authorize]
         public IActionResult MyOrders()
         {
             var userId = this.User.Id();
@@ -168,6 +178,7 @@
             return View(orders);
         }
 
+        [Authorize]
         public IActionResult AllOrders()
         {
 

@@ -1,0 +1,40 @@
+﻿@model FlowerServiceModel
+
+
+  <div class="row" style="margin-left: 35px;">
+      <div class="col-md-3">
+
+       <div class="card">
+        <img class="card-img-top" src="@Model.ImageURL">
+         <div class="card-body text-center">
+
+          <h5 class="card-title">@Model.FlowerName</h5>
+
+          <p class="card-text">@Model.FlowerPrice $</p>
+
+
+       @if (SignInManager.IsSignedIn(User) && !User.IsAdmin())
+       {
+         var userId = User.Id();
+         var userIsAdmin = User.IsAdmin();
+
+            <form method="post" asp-controller="Flowers" asp-action="AddToCart">
+                <input name="UserId" class="d-none" value="@userId">
+                <input name="FlowerId" class="d-none" value="@Model.Id">
+                <input name="FlowerName" class="d-none" value="@Model.FlowerName">
+                <input name="FlowerPrice" class="d-none" value="@Model.FlowerPrice">
+                <input name="ImageURL" class="d-none" value="@Model.ImageURL">
+                <input class="btn btn-custom" type="submit" value="Add to Cart">
+            </form>
+        
+       } 
+         </div>
+       </div>
+      </div>
+      <div class="col-md-3">
+          <p class="card-text">A flower, sometimes known as a bloom or blossom, is the reproductive structure found in flowering plants (plants of the division Angiospermae). The biological function of a flower is to facilitate reproduction, usually by providing a mechanism for the union of sperm with eggs. Flowers may facilitate outcrossing (fusion of sperm and eggs from different individuals in a population) resulting from cross-pollination or allow selfing (fusion of sperm and egg from the same flower) when self-pollination occurs.
+
+There are two types of pollination: self-pollination and cross-pollination. Self-pollination occurs when the pollen from the anther is deposited on the stigma of the same flower, or another flower on the same plant. Cross-pollination is when pollen is transferred from the anther of one flower to the stigma of another flower on a different individual of the same species. Self-pollination happens in flowers where the stamen and carpel mature at the same time, and are positioned so that the pollen can land on the flower's stigma. This pollination does not require an investment from the plant to provide nectar and pollen as food for pollinators.</p>
+          </div>
+    
+  </div>

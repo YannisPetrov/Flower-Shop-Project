@@ -14,6 +14,9 @@
         [Required]
         public string ImageURL { get; set; }
 
+        [Required]
+        public string Info { get; set; }
+
         public ICollection<Cart> Cart { get; set; }
 
     }

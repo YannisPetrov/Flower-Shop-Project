@@ -20,12 +20,14 @@
 
         int Create(string flowerName,
                    double flowerPrice,
-                   string imageURL);
+                   string imageURL,
+                   string info);
 
         bool Edit(int id,
                   string flowerName,
                   double flowerPrice,
-                  string imageURL);
+                  string imageURL,
+                  string info);
 
         bool Delete(int id);
         bool DeleteFromCart(string userId,

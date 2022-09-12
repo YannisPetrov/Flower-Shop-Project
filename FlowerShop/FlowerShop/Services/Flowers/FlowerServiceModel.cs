@@ -6,5 +6,6 @@
         public string FlowerName { get; init; }
         public double FlowerPrice { get; init; }
         public string ImageURL { get; init; }
+        public string Info { get; init; }
     }
 }

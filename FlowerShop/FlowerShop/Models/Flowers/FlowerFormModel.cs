@@ -16,5 +16,10 @@
         [Display(Name = "Image URL")]
         [Url]
         public string ImageURL { get; init; }
+
+        [Required]
+        [Display(Name = "Information about the flower...")]
+        [StringLength(850, MinimumLength = 50)]
+        public string Info { get; init; }
     }
 }

@@ -52,7 +52,8 @@
                 Id = f.Id,
                 FlowerName = f.FlowerName,
                 FlowerPrice = f.FlowerPrice,
-                ImageURL = f.ImageURL
+                ImageURL = f.ImageURL,
+                Info = f.Info
             })
             .FirstOrDefault();
 
@@ -107,13 +108,15 @@
 
         public int Create(string flowerName,
                           double flowerPrice,
-                          string imageURL)
+                          string imageURL,
+                          string info)
         {
             var flowerData = new Flower
             {
                 FlowerName = flowerName,
                 FlowerPrice = flowerPrice,
-                ImageURL = imageURL
+                ImageURL = imageURL,
+                Info = info
             };
 
             this.data.Flowers.Add(flowerData);
@@ -126,7 +129,8 @@
         public bool Edit(int id,
                          string flowerName,
                          double flowerPrice,
-                         string imageURL)
+                         string imageURL,
+                         string info)
         {
             var flowerData = this.data.Flowers.Find(id);
 
@@ -138,6 +142,7 @@
                 flowerData.FlowerName = flowerName;
                 flowerData.FlowerPrice = flowerPrice;
                 flowerData.ImageURL = imageURL;
+                flowerData.Info = info;
              
 
             this.data.SaveChanges();

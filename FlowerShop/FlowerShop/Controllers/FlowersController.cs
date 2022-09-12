@@ -57,7 +57,8 @@
 
             this.flowers.Create(flower.FlowerName,
                                 flower.FlowerPrice,
-                                flower.ImageURL);
+                                flower.ImageURL,
+                                flower.Info);
 
             return RedirectToAction(nameof(All));
         }
@@ -122,7 +123,8 @@
             {
                 FlowerName = flower.FlowerName,
                 FlowerPrice = flower.FlowerPrice,
-                ImageURL = flower.ImageURL
+                ImageURL = flower.ImageURL,
+                Info = flower.Info
             });
         }
 
@@ -137,7 +139,8 @@
             this.flowers.Edit(id,
                               flower.FlowerName,
                               flower.FlowerPrice,
-                              flower.ImageURL);
+                              flower.ImageURL,
+                              flower.Info);
 
 
 

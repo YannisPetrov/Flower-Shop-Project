@@ -16,10 +16,9 @@ ASP.NET Core MVC - Web Application for a Flower Shop.
 ## How to use the app:
 
 
-<p>Without registration you can use only HTML Previewer, but if you want save it , you must be registrated!</p>
+<p>Without registration you can only preview the flowers. You must have a registration to buy them!</p>
 
-<h5> Here you can see the application </h5>
-https://htmlpreviewerapplication.azurewebsites.net/
+
 
 <p> For testing, use : </p>
 <p> Email : admin@fs.com </p>

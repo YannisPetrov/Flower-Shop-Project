@@ -18,6 +18,7 @@
         public DbSet<Cart> Carts { get; init; }
 
         public DbSet<Orders> Orders { get; init; }
+        public DbSet<Address> Addresses { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,6 +50,12 @@
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(c => c.UserId);
+
+            builder
+                .Entity<Address>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Addresses)
+                .HasForeignKey(u => u.UserId);
 
             builder
                 .Entity<Flower>().HasData(

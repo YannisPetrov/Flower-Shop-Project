@@ -80,9 +80,32 @@
             return cartData.FlowerId;
         }
 
+        public int AddAddress(string userId,
+                              string fullName,
+                              string addressInfo,
+                              string populatedPlace,
+                              string phoneNumber)
+        {
+            var addressData = new Address
+            {
+                UserId = userId,
+                FullName = fullName,
+                AddressInfo = addressInfo,
+                PopulatedPlace = populatedPlace,
+                PhoneNumber = phoneNumber
+            };
+
+            this.data.Addresses.Add(addressData);
+
+            this.data.SaveChanges();
+
+            return addressData.AddressId;
+        }
+
         public int Order(string userId,
                          string flowers,
-                         double totalPrice)
+                         double totalPrice/*,
+                         double quantity*/) 
         {
             var cartData = this.data
                 .Carts
@@ -93,7 +116,8 @@
                 {
                     UserId = userId,
                     Flowers = flowers,
-                    TotalPrice = totalPrice
+                    TotalPrice = totalPrice,
+                    /*Quantity = quantity*/
                 };
 
             this.data.Orders.Add(orderData);
@@ -195,5 +219,6 @@
                 ImageURL = f.ImageURL
             })
             .ToList();
+
     }
 }

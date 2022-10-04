@@ -8,6 +8,7 @@
         public User User { get; set; }
         public string Flowers { get; set; }
         public double TotalPrice { get; set; }
+        /*public double Quantity { get; set; }*/
 
     }
 }

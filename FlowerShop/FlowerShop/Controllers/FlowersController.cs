@@ -2,12 +2,14 @@
 {
     using FlowerShop.Models.Flowers;
     using FlowerShop.Data;
-    using FlowerShop.Services.Flowers;
     using FlowerShop.Infrastructure.Extensions;
-    using Microsoft.AspNetCore.Mvc;
+    using FlowerShop.Services.Flowers;
     using FlowerShop.Services.Carts;
     using FlowerShop.Services.Orders;
+    using FlowerShop.Services.Addresses;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+    using FlowerShop.Models.Addressess;
 
     public class FlowersController : Controller
     {
@@ -64,10 +66,40 @@
         }
 
         [Authorize]
-        public IActionResult MyCart()
+        public IActionResult AddAddress() => View();
+
+        [HttpPost]
+        public IActionResult AddAddress(AddressFormModel address)
+        {
+
+            this.flowers.AddAddress(address.UserId,
+                                    address.FullName,
+                                    address.AddressInfo,
+                                    address.PopulatedPlace,
+                                    address.PhoneNumber);
+                                    
+
+
+            return RedirectToAction(nameof(MyCart));
+        }
+
+        [Authorize]
+        public IActionResult MyCart([FromQuery] CartQueryServiceModel query)
            {
 
+
             var userId = this.User.Id();
+
+            var userAddress = this.data.Addresses
+                .Where(a => a.UserId == userId)
+                .Select(a => new AddressModel
+                {
+                    FullName = a.FullName,
+                    AddressInfo = a.AddressInfo,
+                    PopulatedPlace = a.PopulatedPlace,
+                    PhoneNumber = a.PhoneNumber
+                })
+                .ToList();
 
             var flowersByCart = this.data.Carts
                 .Where(c => c.UserId == userId)
@@ -76,13 +108,16 @@
                     FlowerId = f.FlowerId,
                     FlowerName = f.FlowerName,
                     FlowerPrice = f.FlowerPrice,
-                    ImageURL = f.ImageURL
+                    ImageURL = f.ImageURL,
+                    Addresses = userAddress
                 })
                 .ToList();
 
+            query.Flowers = flowersByCart;
+            query.Addresses = userAddress;
             
 
-            return View(flowersByCart);
+            return View(query);
 
            }
 
@@ -106,10 +141,14 @@
 
         public IActionResult Order(string userId,
                                    string flowers, 
-                                   double totalPrice)
+                                   double totalPrice/*,
+                                   double quantity*/)
         {
 
-            this.flowers.Order(userId, flowers, totalPrice);
+            this.flowers.Order(userId,
+                               flowers, 
+                               totalPrice/*, 
+                               quantity*/);
 
             return RedirectToAction(nameof(MyOrders));
         }

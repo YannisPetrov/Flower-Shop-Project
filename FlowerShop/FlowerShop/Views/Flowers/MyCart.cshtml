@@ -1,21 +1,22 @@
-﻿@model List<CartModel>
+﻿@model CartQueryServiceModel
     
  @{
  ViewBag.Title = "My Flowers";
  }
 
-  @if(!Model.Any())
+
+  @if(!Model.Flowers.Any())
   {
     <h5 class="text-center mb-5" style="margin-top: 155px">Your Cart Is Currently Empty. Add Something To It!</h5>
     <a  class="btn btn-custom" style="margin-left: 600px" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
   }
 
-   @if(Model.Any())
+   @if(Model.Flowers.Any())
    {
        var userId = User.Id();
      <div class="row" style="margin-left: 35px;">
-       @foreach(var flower in Model){
-               
+       @foreach(var flower in Model.Flowers){
+
         <div class="col-md-2">
 
          <div class="card" style="width: 11rem;">
@@ -38,14 +39,33 @@
          </div>
         </div>
        }
+
+       @if(!Model.Addresses.Any())
+       {
+         <a class="btn btn-custom" style="width:150px; height: 35px;" asp-area="" asp-controller="Flowers" asp-action="AddAddress">Add an Address</a>
+       }
+
+        @if (Model.Addresses.Any())
+        {
+            <select name="addresses">
+            @foreach (var address in Model.Addresses)
+           {
+               
+               
+               <option value="@address.AddressId">@address.AddressInfo</option>
+               
+
+           }
+            </select>
+        }
+
        </div>
        <form method="post" asp-controller="Flowers" asp-action="Order">
            <input name="UserId" class="d-none" value="@userId">
-           @foreach (var flower in Model)
+           @foreach (var flower in Model.Flowers)
            {
-               string flowerName = flower.FlowerName;
 
-               <input name="Flowers" class="d-none" value="@flowerName">
+               <input name="Flowers" class="d-none" value="@flower.FlowerName">
    
                <input name="TotalPrice" class="d-none" value="@flower.FlowerPrice">
    

@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<FlowerServiceModel>
 
 
-
   <div class="row" style="margin-left: 35px;">
     @foreach(var flower in Model)
     {
@@ -14,12 +13,19 @@
           <h5 class="card-title">@flower.FlowerName</h5>
 
           <p class="card-text">@flower.FlowerPrice $</p>
-          <a asp-controller="Flowers" asp-action="Details" asp-route-id="@flower.Id" class="btn">Details</a>
+          @if(!SignInManager.IsSignedIn(User))
+          {
+              var userIsAdmin = User.IsAdmin();
+                    @if (!userIsAdmin)
+                    {
+                        <a asp-controller="Flowers" asp-action="Details" asp-route-id="@flower.Id" class="btn">Details</a>
+                    }
+          }
        @if (SignInManager.IsSignedIn(User))
        {
          var userId = User.Id();
          var userIsAdmin = User.IsAdmin();
-
+         <a asp-controller="Flowers" asp-action="Details" asp-route-id="@flower.Id" class="btn">Details</a>
         @if (!userIsAdmin)
         {
             <form method="post" asp-controller="Flowers" asp-action="AddToCart">

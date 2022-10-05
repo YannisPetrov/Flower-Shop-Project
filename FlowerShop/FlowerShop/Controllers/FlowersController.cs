@@ -141,13 +141,15 @@
 
         public IActionResult Order(string userId,
                                    string flowers, 
-                                   double totalPrice/*,
+                                   double totalPrice,
+                                   string addressId/*,
                                    double quantity*/)
         {
 
             this.flowers.Order(userId,
                                flowers, 
-                               totalPrice/*, 
+                               totalPrice,
+                               addressId/*, 
                                quantity*/);
 
             return RedirectToAction(nameof(MyOrders));
@@ -228,7 +230,8 @@
                 .Select(f => new OrderModel
                 {
                     Flowers = f.Flowers,
-                    TotalPrice = f.TotalPrice
+                    TotalPrice = f.TotalPrice,
+                    OrderAddress = f.AddressIdByInfo
 
                 })
                 .ToList();

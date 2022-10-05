@@ -9,5 +9,6 @@
         public string AddressInfo { get; set; }
         public string PopulatedPlace { get; set; }
         public string PhoneNumber { get; set; }
+
     }
 }

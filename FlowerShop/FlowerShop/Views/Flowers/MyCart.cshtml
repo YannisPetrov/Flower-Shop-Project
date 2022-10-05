@@ -45,22 +45,11 @@
          <a class="btn btn-custom" style="width:150px; height: 35px;" asp-area="" asp-controller="Flowers" asp-action="AddAddress">Add an Address</a>
        }
 
-        @if (Model.Addresses.Any())
-        {
-            <select name="addresses">
-            @foreach (var address in Model.Addresses)
-           {
-               
-               
-               <option value="@address.AddressId">@address.AddressInfo</option>
-               
+        
 
-           }
-            </select>
-        }
-
-       </div>
+     </div>
        <form method="post" asp-controller="Flowers" asp-action="Order">
+           
            <input name="UserId" class="d-none" value="@userId">
            @foreach (var flower in Model.Flowers)
            {
@@ -69,6 +58,21 @@
    
                <input name="TotalPrice" class="d-none" value="@flower.FlowerPrice">
    
+           }
+
+           @if (Model.Addresses.Any())
+           {
+            <select name="addressId">
+             @foreach (var address in Model.Addresses)
+             {
+               
+               <option value="@address.AddressInfo, @address.PopulatedPlace, @address.FullName, @address.PhoneNumber">
+                   @address.AddressInfo, @address.PopulatedPlace
+               </option>
+
+             }
+            </select>
+            <a class="btn btn-custom" style="width:150px; height: 35px;" asp-area="" asp-controller="Flowers" asp-action="AddAddress">New Address</a>
            }
            <input class="btn btn-custom" style="margin-top: 35px;" type="submit" value="ORDER">
    

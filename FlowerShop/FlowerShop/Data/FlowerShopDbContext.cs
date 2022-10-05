@@ -49,13 +49,13 @@
                 .Entity<Orders>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
-                .HasForeignKey(c => c.UserId);
+                .HasForeignKey(o => o.UserId);
 
             builder
                 .Entity<Address>()
                 .HasOne(a => a.User)
                 .WithMany(u => u.Addresses)
-                .HasForeignKey(u => u.UserId);
+                .HasForeignKey(a => a.UserId);
 
             builder
                 .Entity<Flower>().HasData(

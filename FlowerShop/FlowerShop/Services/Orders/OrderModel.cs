@@ -6,6 +6,7 @@
         public string UserId { get; set; }
         public string Flowers { get; set; }
         public double TotalPrice { get; set; }
+        public string OrderAddress { get; set; }
         /*public double Quantity { get; set; }*/
     }
 }

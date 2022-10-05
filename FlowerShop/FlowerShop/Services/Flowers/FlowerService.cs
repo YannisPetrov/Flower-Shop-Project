@@ -104,7 +104,8 @@
 
         public int Order(string userId,
                          string flowers,
-                         double totalPrice/*,
+                         double totalPrice,
+                         string addressId/*,
                          double quantity*/) 
         {
             var cartData = this.data
@@ -117,6 +118,7 @@
                     UserId = userId,
                     Flowers = flowers,
                     TotalPrice = totalPrice,
+                    AddressIdByInfo = addressId
                     /*Quantity = quantity*/
                 };
 

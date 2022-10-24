@@ -1,6 +1,4 @@
 ﻿namespace FlowerShop.Services.Flowers
-{
-    using FlowerShop.Services.Carts;
     public interface IFlowerService
     {
         FlowerQueryServiceModel All(
@@ -24,7 +22,7 @@
                   string flowers,
                   double totalPrice,
                   string addressId/*,
-                  double quantity*/);
+                  int quantity*/);
 
         int Create(string flowerName,
                    double flowerPrice,

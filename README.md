@@ -6,7 +6,10 @@ ASP.NET Core MVC - Web Application for a Flower Shop.
 <ul>
 <li>  .NET 6.0 </li>
 <li>  ASP.NET Core MVC </li>
-<li>  EntityFrameworkCore </li>
+<li>  Entity Framework Core </li>
+    <li> EntityFrameworkCore.InMemory </li>
+<li>  XUnit </li>
+<li>  Moq </li>
 <li>  MSSQL Server </li>
 <li>  Custom CSS </li>
 <li>  Bootstrap </li>

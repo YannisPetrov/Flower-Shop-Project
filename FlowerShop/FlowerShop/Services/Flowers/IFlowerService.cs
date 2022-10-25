@@ -1,4 +1,5 @@
 ﻿namespace FlowerShop.Services.Flowers
+{ 
     public interface IFlowerService
     {
         FlowerQueryServiceModel All(

@@ -1,6 +1,16 @@
 ﻿namespace FlowerShop.Tests.Mocks
 {
-    public class FlowerServiceMock
+    using FlowerShop.Services.Flowers;
+
+    public static class FlowerServiceMock
     {
+        public static IFlowerService Instance
+        {
+            get
+            {
+                return null;
+            }
+
+        }
     }
 }

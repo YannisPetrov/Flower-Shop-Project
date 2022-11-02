@@ -1,5 +1,9 @@
 ﻿namespace FlowerShop.Services.Flowers
-{ 
+{
+    using FlowerShop.Data.Models;
+    using FlowerShop.Services.Carts;
+    using FlowerShop.Services.Orders;
+
     public interface IFlowerService
     {
         FlowerQueryServiceModel All(
@@ -9,16 +13,14 @@
 
         FlowerServiceModel Details(int id);
 
-        int AddToCart(string userId,
-                      int flowerId,
-                      string flowerName,
-                      double flowerPrice,
-                      string imageUrl);
-        int AddAddress(string userId,
-                       string fullName,
-                       string addressInfo,
-                       string populatedPlace,
-                       string phoneNumber);
+        OrderQueryServiceModel AllOrders();
+
+        OrderQueryServiceModel MyOrders(string id);
+
+        CartQueryServiceModel MyCart(string id);
+
+        int AddToCart(Cart cart);
+        int AddAddress(Address address);
         int Order(string userId,
                   string flowers,
                   double totalPrice,

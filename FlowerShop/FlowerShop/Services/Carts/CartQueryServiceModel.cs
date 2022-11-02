@@ -1,9 +1,10 @@
 ﻿namespace FlowerShop.Services.Carts
 {
-    using FlowerShop.Services.Addresses;
+    using FlowerShop.ViewModels;
+
     public class CartQueryServiceModel
     {
-        public IEnumerable<CartModel> Flowers { get; set; }
-        public IEnumerable<AddressModel> Addresses { get; set; }
+        public IEnumerable<CartDto> Flowers { get; set; }
+        public IEnumerable<AddressDto> Addresses { get; set; }
     }
 }

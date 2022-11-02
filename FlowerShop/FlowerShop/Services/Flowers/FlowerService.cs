@@ -4,6 +4,9 @@
     using System.Linq;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
+    using FlowerShop.Services.Carts;
+    using FlowerShop.Services.Orders;
+    using FlowerShop.ViewModels;
 
     public class FlowerService : IFlowerService
     {
@@ -57,49 +60,92 @@
             })
             .FirstOrDefault();
 
-
-        public int AddToCart(string userId,
-                             int flowerId,
-                             string flowerName,
-                             double flowerPrice,
-                             string imageUrl)
+        public OrderQueryServiceModel AllOrders()
         {
-            var cartData = new Cart
+            var orders = this.data
+               .Orders
+                .Select(f => new OrderDto
+                {
+                    Flowers = f.Flowers,
+                    TotalPrice = f.TotalPrice,
+                    OrderAddress = f.AddressIdByInfo
+
+                })
+                .ToList();
+
+            return new OrderQueryServiceModel
             {
-                UserId = userId,
-                FlowerId = flowerId,
-                FlowerName = flowerName,
-                FlowerPrice = flowerPrice,
-                ImageURL = imageUrl
+                Orders = orders
             };
-
-            this.data.Carts.Add(cartData);
-
-            this.data.SaveChanges();
-
-            return cartData.FlowerId;
         }
 
-        public int AddAddress(string userId,
-                              string fullName,
-                              string addressInfo,
-                              string populatedPlace,
-                              string phoneNumber)
+        public OrderQueryServiceModel MyOrders(string id)
         {
-            var addressData = new Address
-            {
-                UserId = userId,
-                FullName = fullName,
-                AddressInfo = addressInfo,
-                PopulatedPlace = populatedPlace,
-                PhoneNumber = phoneNumber
-            };
+            var orders = this.data.Orders
+                .Where(c => c.UserId == id)
+                .Select(f => new OrderDto
+                {
+                    OrderId = f.OrderId,
+                    Flowers = f.Flowers,
+                    TotalPrice = f.TotalPrice
 
-            this.data.Addresses.Add(addressData);
+                })
+                .ToList();
+
+            return new OrderQueryServiceModel
+            {
+                Orders = orders
+            };
+        }
+
+        public CartQueryServiceModel MyCart(string id)
+        {
+            var userAddress = this.data.Addresses
+                .Where(a => a.UserId == id)
+                .Select(a => new AddressDto
+                {
+                    FullName = a.FullName,
+                    AddressInfo = a.AddressInfo,
+                    PopulatedPlace = a.PopulatedPlace,
+                    PhoneNumber = a.PhoneNumber
+                })
+                .ToList();
+
+            var flowersByCart = this.data.Carts
+                .Where(c => c.UserId == id)
+                .Select(f => new CartDto
+                {
+                    FlowerId = f.FlowerId,
+                    FlowerName = f.FlowerName,
+                    FlowerPrice = f.FlowerPrice,
+                    ImageURL = f.ImageURL,
+                    Addresses = userAddress
+                })
+                .ToList();
+
+            return new CartQueryServiceModel
+            {
+                Addresses = userAddress,
+                Flowers = flowersByCart
+            };
+        }
+
+        public int AddToCart(Cart cart)
+        {
+            this.data.Carts.Add(cart);
 
             this.data.SaveChanges();
 
-            return addressData.AddressId;
+            return cart.FlowerId;
+        }
+
+        public int AddAddress(Address address)
+        {
+            this.data.Addresses.Add(address);
+
+            this.data.SaveChanges();
+
+            return address.AddressId;
         }
 
         public int Order(string userId,
@@ -222,5 +268,6 @@
             })
             .ToList();
 
+        
     }
 }

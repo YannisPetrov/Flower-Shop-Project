@@ -1,16 +1,16 @@
-﻿@model List<OrderModel>
+﻿@model OrderQueryServiceModel
     
     @{
     ViewBag.Title = "My Orders";
     }
 
-    @if(!Model.Any())
+    @if(!Model.Orders.Any())
     {
        <h5 class="text-center" style="margin-top: 155px">You Have Not Made Any Orders. Buy Something!</h5>
        <a  class="btn btn-custom" style="margin-left: 600px" asp-area="" asp-controller="Flowers" asp-action="All">Flowers</a>
     }
 
-      @if(Model.Any()){
+      @if(Model.Orders.Any()){
       
          <div class="row">
             <table class="table table-striped">
@@ -23,7 +23,7 @@
                 </thead>
       
               
-           @foreach(var order in Model){
+           @foreach(var order in Model.Orders){
                 <tbody>
                   <tr>
                     <th scope="row">@order.OrderId</th>

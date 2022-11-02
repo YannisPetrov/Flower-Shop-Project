@@ -6,10 +6,10 @@
     using FlowerShop.Services.Flowers;
     using FlowerShop.Services.Carts;
     using FlowerShop.Services.Orders;
-    using FlowerShop.Services.Addresses;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using FlowerShop.Models.Addressess;
+    using FlowerShop.ViewModels;
 
     public class FlowersController : Controller
     {
@@ -69,17 +69,10 @@
         public IActionResult AddAddress() => View();
 
         [HttpPost]
-        public IActionResult AddAddress(AddressFormModel address)
+        public IActionResult AddAddress(AddressFormDto address)
         {
-
-            this.flowers.AddAddress(address.UserId,
-                                    address.FullName,
-                                    address.AddressInfo,
-                                    address.PopulatedPlace,
-                                    address.PhoneNumber);
+            this.flowers.AddAddress(address.ToModel());
                                     
-
-
             return RedirectToAction(nameof(MyCart));
         }
 
@@ -87,34 +80,12 @@
         public IActionResult MyCart([FromQuery] CartQueryServiceModel query)
            {
 
-
             var userId = this.User.Id();
 
-            var userAddress = this.data.Addresses
-                .Where(a => a.UserId == userId)
-                .Select(a => new AddressModel
-                {
-                    FullName = a.FullName,
-                    AddressInfo = a.AddressInfo,
-                    PopulatedPlace = a.PopulatedPlace,
-                    PhoneNumber = a.PhoneNumber
-                })
-                .ToList();
+            var myCart = this.flowers.MyCart(userId);
 
-            var flowersByCart = this.data.Carts
-                .Where(c => c.UserId == userId)
-                .Select(f => new CartModel
-                {
-                    FlowerId = f.FlowerId,
-                    FlowerName = f.FlowerName,
-                    FlowerPrice = f.FlowerPrice,
-                    ImageURL = f.ImageURL,
-                    Addresses = userAddress
-                })
-                .ToList();
-
-            query.Flowers = flowersByCart;
-            query.Addresses = userAddress;
+            query.Flowers = myCart.Flowers;
+            query.Addresses = myCart.Addresses;
             
 
             return View(query);
@@ -123,31 +94,23 @@
 
 
         [HttpPost]
-        public IActionResult AddToCart(string userId,
-                                       int flowerId,
-                                       string flowerName,
-                                       double flowerPrice,
-                                       string imageUrl)
+        public IActionResult AddToCart(AddToCartDto addToCart)
         {
 
-            this.flowers.AddToCart(userId, 
-                                   flowerId, 
-                                   flowerName, 
-                                   flowerPrice, 
-                                   imageUrl);
+            this.flowers.AddToCart(addToCart.ToModel());
 
             return RedirectToAction(nameof(MyCart));
         }
 
         public IActionResult Order(string userId,
-                                   string flowers, 
-                                   double totalPrice,
-                                   string addressId/*,
+                                           string flowers,
+                                           double totalPrice,
+                                           string addressId/*,
                                    double quantity*/)
         {
 
             this.flowers.Order(userId,
-                               flowers, 
+                               flowers,
                                totalPrice,
                                addressId/*, 
                                quantity*/);
@@ -183,8 +146,6 @@
                               flower.ImageURL,
                               flower.Info);
 
-
-
             return RedirectToAction(nameof(All));
 
         }
@@ -209,15 +170,7 @@
         {
             var userId = this.User.Id();
 
-            var orders = this.data.Orders
-                .Where(c => c.UserId == userId)
-                .Select(f => new OrderModel
-                {
-                    Flowers = f.Flowers,
-                    TotalPrice = f.TotalPrice
-
-                })
-                .ToList();
+            var orders = this.flowers.MyOrders(userId);
 
             return View(orders);
         }
@@ -226,15 +179,7 @@
         public IActionResult AllOrders()
         {
 
-            var orders = this.data.Orders
-                .Select(f => new OrderModel
-                {
-                    Flowers = f.Flowers,
-                    TotalPrice = f.TotalPrice,
-                    OrderAddress = f.AddressIdByInfo
-
-                })
-                .ToList();
+            var orders = this.flowers.AllOrders();
 
             return View(orders);
         }

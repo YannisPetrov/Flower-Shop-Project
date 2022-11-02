@@ -1,15 +1,15 @@
-﻿@model List<OrderModel>
+﻿@model OrderQueryServiceModel
     
     @{
     ViewBag.Title = "All Orders";
     }
 
-    @if(!Model.Any())
+    @if(!Model.Orders.Any())
     {
         <h5 class="card-title">There are no orders yet.</h5>
     }
 
-    @if(Model.Any())
+    @if(Model.Orders.Any())
     {
 
                <div class="row">
@@ -23,7 +23,7 @@
                         </tr>
                       </thead>
 
-                 @foreach(var order in Model){
+                 @foreach(var order in Model.Orders){
                       <tbody>
                         <tr>
                           <th scope="row">@order.OrderId</th>

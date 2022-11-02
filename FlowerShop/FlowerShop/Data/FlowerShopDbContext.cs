@@ -12,11 +12,8 @@
             
         }
 
-
         public DbSet<Flower> Flowers { get; init; }
-
         public DbSet<Cart> Carts { get; init; }
-
         public DbSet<Orders> Orders { get; init; }
         public DbSet<Address> Addresses { get; init; }
 

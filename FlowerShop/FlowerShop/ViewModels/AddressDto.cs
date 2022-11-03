@@ -1,14 +1,25 @@
 ﻿namespace FlowerShop.ViewModels
 {
+    using System.ComponentModel.DataAnnotations;
     using FlowerShop.Data.Models;
 
     public class AddressDto
     {
         public int AddressId { get; set; }
+
+        [Required]
         public string UserId { get; set; }
+
+        [Required]
         public string FullName { get; set; }
+
+        [Required]
         public string AddressInfo { get; set; }
+
+        [Required]
         public string PopulatedPlace { get; set; }
+
+        [Required]
         public string PhoneNumber { get; set; }
 
         public Address ToModel()

@@ -5,10 +5,8 @@
     using FlowerShop.Infrastructure.Extensions;
     using FlowerShop.Services.Flowers;
     using FlowerShop.Services.Carts;
-    using FlowerShop.Services.Orders;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    using FlowerShop.Models.Addressess;
     using FlowerShop.ViewModels;
 
     public class FlowersController : Controller
@@ -38,7 +36,7 @@
 
             return View(query);
         }
-
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var flower = this.flowers.Details(id);
@@ -89,7 +87,6 @@
             
 
             return View(query);
-
            }
 
 
@@ -118,7 +115,7 @@
             return RedirectToAction(nameof(MyOrders));
         }
 
-
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var flower = this.flowers.Details(id);
@@ -149,6 +146,8 @@
             return RedirectToAction(nameof(All));
 
         }
+
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             this.flowers.Delete(id);

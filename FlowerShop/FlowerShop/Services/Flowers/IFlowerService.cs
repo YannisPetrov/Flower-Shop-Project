@@ -27,10 +27,7 @@
                   string addressId/*,
                   int quantity*/);
 
-        int Create(string flowerName,
-                   double flowerPrice,
-                   string imageURL,
-                   string info);
+        int Create(Flower flower);
 
         bool Edit(int id,
                   string flowerName,

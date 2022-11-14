@@ -48,17 +48,14 @@
         public IActionResult Add() => View();
         
         [HttpPost]
-        public IActionResult Add(FlowerFormModel flower)
+        public IActionResult Add(FlowerFormDto flower)
         {
             if (!ModelState.IsValid)
             {
                 return View(flower);
             }
 
-            this.flowers.Create(flower.FlowerName,
-                                flower.FlowerPrice,
-                                flower.ImageURL,
-                                flower.Info);
+            this.flowers.Create(flower.ToModel());
 
             return RedirectToAction(nameof(All));
         }
@@ -120,7 +117,7 @@
         {
             var flower = this.flowers.Details(id);
 
-            return View(new FlowerFormModel
+            return View(new FlowerFormDto
             {
                 FlowerName = flower.FlowerName,
                 FlowerPrice = flower.FlowerPrice,
@@ -130,7 +127,7 @@
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, FlowerFormModel flower)
+        public IActionResult Edit(int id, FlowerFormDto flower)
         {
             if (!ModelState.IsValid)
             {

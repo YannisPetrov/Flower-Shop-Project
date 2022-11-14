@@ -178,24 +178,13 @@
         }
 
 
-        public int Create(string flowerName,
-                          double flowerPrice,
-                          string imageURL,
-                          string info)
+        public int Create(Flower flower)
         {
-            var flowerData = new Flower
-            {
-                FlowerName = flowerName,
-                FlowerPrice = flowerPrice,
-                ImageURL = imageURL,
-                Info = info
-            };
-
-            this.data.Flowers.Add(flowerData);
+            this.data.Flowers.Add(flower);
 
             this.data.SaveChanges();
 
-            return flowerData.Id;
+            return flower.Id;
         }
 
         public bool Edit(int id,
@@ -268,6 +257,5 @@
             })
             .ToList();
 
-        
     }
 }

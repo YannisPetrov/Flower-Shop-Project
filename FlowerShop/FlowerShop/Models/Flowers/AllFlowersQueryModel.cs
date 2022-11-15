@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
-    using FlowerShop.Services.Flowers;
+    using FlowerShop.Services.ServiceModels.FlowersServiceModels;
 
     public class AllFlowersQueryModel
     {

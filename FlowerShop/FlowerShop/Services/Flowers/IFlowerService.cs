@@ -1,8 +1,9 @@
 ﻿namespace FlowerShop.Services.Flowers
 {
     using FlowerShop.Data.Models;
-    using FlowerShop.Services.Carts;
-    using FlowerShop.Services.Orders;
+    using FlowerShop.Services.ServiceModels.CartsServiceModels;
+    using FlowerShop.Services.ServiceModels.FlowersServiceModels;
+    using FlowerShop.Services.ServiceModels.OrdersServiceModels;
 
     public interface IFlowerService
     {

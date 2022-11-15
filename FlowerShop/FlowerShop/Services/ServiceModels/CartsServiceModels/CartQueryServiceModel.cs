@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Services.Carts
+﻿namespace FlowerShop.Services.ServiceModels.CartsServiceModels
 {
     using FlowerShop.ViewModels;
 

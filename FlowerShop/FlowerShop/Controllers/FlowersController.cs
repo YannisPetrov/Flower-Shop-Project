@@ -4,10 +4,10 @@
     using FlowerShop.Data;
     using FlowerShop.Infrastructure.Extensions;
     using FlowerShop.Services.Flowers;
-    using FlowerShop.Services.Carts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using FlowerShop.ViewModels;
+    using FlowerShop.Services.ServiceModels.CartsServiceModels;
 
     public class FlowersController : Controller
     {

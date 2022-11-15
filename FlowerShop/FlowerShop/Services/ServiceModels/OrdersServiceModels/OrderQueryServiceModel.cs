@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Services.Orders
+﻿namespace FlowerShop.Services.ServiceModels.OrdersServiceModels
 {
     using FlowerShop.ViewModels;
 

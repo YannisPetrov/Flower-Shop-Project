@@ -1,4 +1,4 @@
-﻿namespace FlowerShop.Services.Flowers
+﻿namespace FlowerShop.Services.ServiceModels.FlowersServiceModels
 {
     public class FlowerQueryServiceModel
     {

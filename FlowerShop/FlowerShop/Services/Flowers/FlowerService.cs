@@ -4,8 +4,9 @@
     using System.Linq;
     using FlowerShop.Data;
     using FlowerShop.Data.Models;
-    using FlowerShop.Services.Carts;
-    using FlowerShop.Services.Orders;
+    using FlowerShop.Services.ServiceModels.CartsServiceModels;
+    using FlowerShop.Services.ServiceModels.FlowersServiceModels;
+    using FlowerShop.Services.ServiceModels.OrdersServiceModels;
     using FlowerShop.ViewModels;
 
     public class FlowerService : IFlowerService
@@ -257,5 +258,6 @@
             })
             .ToList();
 
+        
     }
 }
